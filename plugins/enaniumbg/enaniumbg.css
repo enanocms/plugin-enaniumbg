@@ -1,0 +1,17 @@
+div#enanium_bg_list {
+  position: absolute;
+  right: 10px;
+  top: 43px;
+  background-image: url(../../themes/enanium/images/transb50.png);
+  padding: 11px 4px 8px 4px;
+}
+
+div#enanium_bg_list a {
+  padding: 8px 4px 1px 4px;
+  margin: 0 4px;
+  border: 1px solid #808080;
+}
+
+div#enanium_bg_list a:hover, div#enanium_bg_list a.selected {
+  border-color: #ffcb00;
+}
