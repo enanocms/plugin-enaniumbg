@@ -11,16 +11,16 @@ function enanium_change_bg(image)
     body.style.backgroundImage = 'url(' + cdnPath + '/themes/enanium/images/background.gif)';
     body.style.backgroundRepeat = 'repeat';
     body.style.backgroundAttachment = 'scroll';
-    cw.style.backgroundImage = null;
+    cw.style.backgroundImage = 'none';
     cw.style.backgroundColor = '#ffffff';
   }
   else
   {
-    body.style.backgroundRepeat = 'no-repeat';
-    body.style.backgroundPosition = 'center top';
+    body.style.backgroundRepeat = enanium_bg_repeat;
+    body.style.backgroundAttachment = enanium_bg_attachment;
+    body.style.backgroundPosition = enanium_bg_position;
     body.style.backgroundColor = '#000000';
     body.style.backgroundImage = 'url(' + scriptPath + '/plugins/enaniumbg/' + image + '.jpg)';
-    body.style.backgroundAttachment = 'fixed';
     cw.style.backgroundImage = 'url(' + scriptPath + '/plugins/enaniumbg/transw70.png)';
     cw.style.backgroundColor = 'transparent';
   }
