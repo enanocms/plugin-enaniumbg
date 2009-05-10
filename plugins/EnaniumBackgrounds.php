@@ -15,7 +15,8 @@ $plugins->attachHook('enanium_main_header', 'enanium_paint_bg_controls();');
 $plugins->attachHook('compile_template', 'enanium_add_headers();');
 $plugins->attachHook('acl_rule_init', '$this->addAdminNode("adm_cat_appearance", "enaniumbg_acppage", "EnaniumConfig", scriptPath . "/plugins/enaniumbg/icons/garden.png");');
 
-$ebg_images = array('default', 'aqua', 'blinds', 'dune', 'freshflower', 'garden', 'greenmeadow', 'ladybird', 'raindrops', 'storm', 'twowings', 'wood', 'yellowflower');
+$ebg_system_images = array('default', 'aqua', 'blinds', 'dune', 'freshflower', 'garden', 'greenmeadow', 'ladybird', 'raindrops', 'storm', 'twowings', 'wood', 'yellowflower');
+$ebg_images = array();
 
 $ebg_outsiders = array();
 if ( $dr = @opendir(ENANO_ROOT . '/plugins/enaniumbg') )
@@ -30,8 +31,11 @@ if ( $dr = @opendir(ENANO_ROOT . '/plugins/enaniumbg') )
     
     $dh = preg_replace('/\.jpg$/', '', $dh);
     
-    if ( in_array($dh, $ebg_images) )
+    if ( in_array($dh, $ebg_system_images) )
+    {
+      $ebg_images[] = $dh;
       continue;
+    }
     
     if ( !file_exists(ENANO_ROOT . "/plugins/enaniumbg/icons/$dh.png") )
       continue;
@@ -44,7 +48,7 @@ unset($dh, $dr);
 
 function enanium_paint_bg_controls()
 {
-  global $ebg_images, $ebg_outsiders;
+  global $ebg_system_images, $ebg_images, $ebg_outsiders;
   global $lang;
   
   if ( !getConfig('enanium_show_switcher', 1) )
@@ -53,8 +57,11 @@ function enanium_paint_bg_controls()
   ?>
   <div id="enanium_bg_list">
     <?php
-    foreach ( $ebg_images as $i => $image )
+    foreach ( $ebg_system_images as $i => $image )
     {
+      if ( !in_array($image, $ebg_images) )
+        continue;
+      
       $sel = ( $image == getConfig('enanium_bg', 'default') ) ? ' class="selected"' : '';
       echo '<a' . $sel . ' href="#bg:' . $image . '" id="ebg_' . $image . '" onclick="enanium_change_bg(\'' . $image . '\', this); return false;" title="' . $lang->get('enaniumbg_' . $image) . '">';
       echo enanium_generate_sprite(scriptPath . '/plugins/enaniumbg/icons/sprite.png', 16, 16, 0, $i * 16);
