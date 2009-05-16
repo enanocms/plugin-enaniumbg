@@ -16,7 +16,7 @@ $plugins->attachHook('compile_template', 'enanium_add_headers();');
 $plugins->attachHook('acl_rule_init', '$this->addAdminNode("adm_cat_appearance", "enaniumbg_acppage", "EnaniumConfig", scriptPath . "/plugins/enaniumbg/icons/garden.png");');
 
 $ebg_system_images = array('default', 'aqua', 'blinds', 'dune', 'freshflower', 'garden', 'greenmeadow', 'ladybird', 'raindrops', 'storm', 'twowings', 'wood', 'yellowflower');
-$ebg_images = array();
+$ebg_images = array('default');
 
 $ebg_outsiders = array();
 if ( $dr = @opendir(ENANO_ROOT . '/plugins/enaniumbg') )
@@ -147,7 +147,7 @@ function page_Admin_EnaniumConfig()
   if ( isset($_POST['enanium_bg']) )
   {
     $bg = $_POST['enanium_bg'];
-    if ( file_exists(ENANO_ROOT . "/plugins/enaniumbg/$bg.jpg") )
+    if ( file_exists(ENANO_ROOT . "/plugins/enaniumbg/$bg.jpg") || $bg === 'default' )
       setConfig('enanium_bg', $bg);
     
     $val = isset($_POST['show_switcher']) ? '1' : '0';
